@@ -1,0 +1,86 @@
+/* BounceCards — 扇形散开的卡片堆（配色与圆角来自 DESIGN.md 金色 token） */
+
+.bounceCardsContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--bounce-w, 640px);
+  height: var(--bounce-h, 430px);
+  max-width: 100%;
+}
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--bounce-card-w, 272px);
+  height: var(--bounce-card-h, 170px);
+  margin-left: calc(var(--bounce-card-w, 272px) / -2);
+  margin-top: calc(var(--bounce-card-h, 170px) / -2);
+  padding: 6px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--rounded-lg);
+  background-color: var(--color-surface-card);
+  box-shadow: var(--shadow-2);
+  transform-origin: center center;
+  cursor: pointer;
+  transition: box-shadow var(--dur-standard) var(--ease-soft),
+    border-color var(--dur-micro) linear;
+}
+
+.card-0 {
+  z-index: 1;
+}
+
+.card-1 {
+  z-index: 2;
+}
+
+.card-2 {
+  z-index: 3;
+}
+
+.card-3 {
+  z-index: 4;
+}
+
+.card:hover,
+.card:focus-visible {
+  z-index: 10;
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-3);
+}
+
+.card:active {
+  transform: translateY(2px);
+}
+
+.card--selected {
+  border-color: var(--color-secondary);
+  box-shadow: var(--shadow-3);
+}
+
+.card .image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--rounded-lg) - 8px);
+  border: 2px solid var(--color-surface-card);
+  pointer-events: none;
+}
+
+/* 触屏上不显示悬停态，扇形保持静止；点击即打开详情 */
+@media (hover: none) {
+  .card:hover {
+    box-shadow: var(--shadow-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: box-shadow var(--dur-standard) var(--ease-soft),
+      border-color var(--dur-micro) linear;
+  }
+}

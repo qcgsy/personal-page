@@ -1,0 +1,188 @@
+/* AnimatedList — 滑动展示目录（配色来自 DESIGN.md 的四色 pastel token） */
+
+.scroll-list-container {
+  position: relative;
+  width: 100%;
+  padding: var(--space-sm);
+  border-radius: var(--rounded-lg);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface-card);
+  box-shadow: var(--shadow-2);
+}
+
+.scroll-list {
+  max-height: 400px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-soft) var(--color-surface-sunken);
+}
+
+.scroll-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-list::-webkit-scrollbar-track {
+  background: var(--color-surface-sunken);
+  border-radius: var(--rounded-full);
+}
+
+.scroll-list::-webkit-scrollbar-thumb {
+  background: var(--color-primary-soft);
+  border-radius: var(--rounded-full);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.animated-item {
+  margin-bottom: 6px;
+}
+
+.animated-item:last-child {
+  margin-bottom: 0;
+}
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: var(--rounded-md);
+  background-color: transparent;
+  text-align: left;
+  transition: background-color var(--dur-micro) linear,
+    transform var(--dur-standard) var(--ease-spring);
+}
+
+.item:hover {
+  background-color: var(--color-surface-sunken);
+}
+
+.item:active {
+  transform: translateY(2px);
+}
+
+.item.selected {
+  background-color: var(--color-primary-tint);
+}
+
+.item__notch {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 4px;
+  height: 20px;
+  margin-top: -10px;
+  border-radius: var(--rounded-full);
+  background-color: var(--color-primary-strong);
+}
+
+.item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-left: 14px;
+}
+
+.item__micro {
+  color: var(--color-on-surface-mute);
+}
+
+.item__label {
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-on-surface);
+  overflow-wrap: break-word;
+}
+
+.item.selected .item__label {
+  font-weight: 700;
+}
+
+.item__badge {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 20px;
+  padding: 4px 10px;
+  border-radius: var(--rounded-full);
+  font-family: var(--font-micro);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.item__badge--scene {
+  background-color: var(--color-primary-tint);
+  color: var(--color-primary-strong);
+}
+
+.item__badge--project {
+  background-color: var(--color-secondary-tint);
+  color: var(--color-secondary-strong);
+}
+
+.item__badge--gallery {
+  background-color: var(--color-tertiary-tint);
+  color: var(--color-tertiary-strong);
+}
+
+/* 渐隐遮罩：向所在场景的底色淡出，永远不是黑色 */
+.top-gradient {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 32px;
+  border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
+  background: linear-gradient(to bottom, #eafbf1 0%, rgba(234, 251, 241, 0) 100%);
+  pointer-events: none;
+  transition: opacity var(--dur-micro) ease;
+}
+
+.bottom-gradient {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  height: 32px;
+  border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
+  background: linear-gradient(to top, #eafbf1 0%, rgba(234, 251, 241, 0) 100%);
+  pointer-events: none;
+  transition: opacity var(--dur-micro) ease;
+}
+
+@media (max-width: 1199px) {
+  .scroll-list {
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll-list-container {
+    padding: 10px;
+  }
+
+  .scroll-list {
+    max-height: 320px;
+  }
+
+  .item {
+    min-height: 48px;
+    padding: 10px 12px;
+  }
+}
